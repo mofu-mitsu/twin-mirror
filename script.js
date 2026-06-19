@@ -11,10 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const originalList = document.getElementById("original-list");
     const twinList = document.getElementById("twin-list");
 
-    // Google Apps Script(GAS)のWebアプリURL（設定していれば稼働します）
     const GAS_URL = "https://script.google.com/macros/s/xxxx/exec"; 
 
-    // 共有用テキストを保持する変数
     let generatedShareText = "";
 
     const fields = [
@@ -33,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
         twinList.innerHTML = "";
         let hasInput = false;
         const gasData = {}; 
-        const shareResults = []; // シェアテキスト用の配列
+        const shareResults = []; 
 
         fields.forEach(field => {
             const inputVal = document.getElementById(field.id).value.trim();
@@ -41,19 +39,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 hasInput = true;
                 const twinVal = field.converter(inputVal);
 
-                // GAS用データ
                 gasData[field.id + "_org"] = inputVal;
                 gasData[field.id + "_twin"] = twinVal;
-
-                // シェア用テキストの行を生成
                 shareResults.push(`・${field.name}: ${inputVal} ➔ ${twinVal}`);
 
-                // Original側に追加
                 const origLi = document.createElement("li");
                 origLi.innerHTML = `<span>${field.name}</span> <span class="val">${inputVal}</span>`;
                 originalList.appendChild(origLi);
 
-                // Twin側に追加
                 const twinLi = document.createElement("li");
                 twinLi.innerHTML = `<span>${field.name}</span> <span class="val">${twinVal}</span>`;
                 twinList.appendChild(twinLi);
@@ -64,33 +57,27 @@ document.addEventListener("DOMContentLoaded", () => {
             resultSection.classList.remove("hidden");
             actionButtons.classList.remove("hidden");
             
-            // シェアテキストの動的組み立て
             const resultSummaryText = shareResults.join("\n");
-            generatedShareText = `私の自認タイプと、鏡合わせの双子タイプを診断したよ！\n\n【Original ➔ Twin】\n${resultSummaryText}\n\n同じものに惹かれ、違う方法で答えを探す「Twin Mirror」をあなたも試してみて！\n#TwinMirror #準同一診断 #双子診断`;
+            // ハッシュタグを2つに変更！
+            generatedShareText = `私の自認タイプと、鏡合わせの双子タイプを診断したよ！\n\n【Original ➔ Twin】\n${resultSummaryText}\n\n同じものに惹かれ、違う方法で答えを探す「Twin Mirror」をあなたも試してみて！\n#TwinMirror #準同一・双子診断`;
 
-            // スムーズスクロール
             setTimeout(() => {
                 resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }, 100);
 
-            // GASへバックグラウンド送信
             sendToGAS(gasData);
-
         } else {
             alert("最低1つ以上の項目を入力してください。");
         }
     });
 
-    // GAS送信関数
     async function sendToGAS(data) {
         if (!GAS_URL || GAS_URL.includes("xxxx")) return;
         try {
             await fetch(GAS_URL, {
                 method: "POST",
                 mode: "no-cors",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data)
             });
             console.log("診断結果をスプレッドシートに送信しました。");
@@ -99,18 +86,19 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // リセット処理
     resetBtn.addEventListener("click", () => {
         form.reset();
         resultSection.classList.add("hidden");
         actionButtons.classList.add("hidden");
         originalList.innerHTML = "";
         twinList.innerHTML = "";
-        generatedShareText = ""; // 共有用テキストもリセット
+        generatedShareText = ""; 
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // 画像として保存
+    // ============================================
+    // 画像保存（スマホでも横長PCレイアウトで保存）
+    // ============================================
     downloadBtn.addEventListener("click", () => {
         const currentScroll = window.scrollY;
         window.scrollTo(0, 0); 
@@ -118,7 +106,27 @@ document.addEventListener("DOMContentLoaded", () => {
         html2canvas(resultSection, {
             backgroundColor: "#0f0f0f",
             scale: 2, 
-            logging: false
+            logging: false,
+            windowWidth: 800, // キャプチャ用の仮想ウィンドウ幅をPCサイズに固定
+            onclone: (clonedDoc) => {
+                // キャプチャ用のDOMだけ強制的にPC用のレイアウトに書き換える
+                const clonedResult = clonedDoc.getElementById("capture-area");
+                const mirrorContainer = clonedDoc.querySelector(".mirror-container");
+                const divider = clonedDoc.querySelector(".mirror-divider");
+
+                clonedResult.style.width = "800px";
+                clonedResult.style.padding = "2.5rem 2rem";
+                
+                if (mirrorContainer) {
+                    mirrorContainer.style.flexDirection = "row"; // 強制横並び
+                    mirrorContainer.style.alignItems = "stretch";
+                }
+                
+                if (divider) {
+                    divider.style.transform = "none"; // 矢印の回転を元に戻す
+                    divider.style.padding = "0 1.5rem";
+                }
+            }
         }).then(canvas => {
             const link = document.createElement("a");
             link.download = "twin-mirror.png";
@@ -128,11 +136,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Web Share API によるナビゲーション共有
     shareBtn.addEventListener("click", async () => {
         const shareData = {
             title: "Twin Mirror - 準同一・双子タイプ診断",
-            text: generatedShareText || "同じものに惹かれ、違う方法で答えを探す。鏡合わせの「双子（準同一）」タイプを診断しよう！\n#TwinMirror #準同一・双子タイプ診断",
+            text: generatedShareText || "同じものに惹かれ、違う方法で答えを探す。鏡合わせの「双子（準同一）」タイプを診断しよう！\n#TwinMirror #準同一・双子診断",
             url: window.location.href
         };
 
