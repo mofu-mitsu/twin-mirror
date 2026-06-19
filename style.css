@@ -688,3 +688,12 @@ button {
     border-color: var(--accent);
     color: var(--accent);
 }
+
+.concept-catch {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 1rem !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.5rem;
+}
