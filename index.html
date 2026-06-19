@@ -62,12 +62,13 @@
 
         <section class="input-section">
             <h2><i class="fa-solid fa-pen-nib"></i> Enter Your Typology</h2>
-            <p class="note">※入力もリストからの選択も可能です。分からない項目は空白でOK！</p>
+            <!-- ↓スマホ向けに「1文字打つと〜」の補足を足したよ！ -->
+            <p class="note">※リストから選択、または直接入力が可能です。<br>（スマホの方は1文字入力すると候補が表示されます）<br>分からない項目は空白のままでOK！</p>
             
             <form id="typology-form">
                 <div class="input-group">
                     <label>MBTI</label>
-                    <input type="text" id="mbti" list="mbti-list" placeholder="例: INTJ" autocomplete="off">
+                    <input type="text" id="mbti" list="mbti-list" placeholder="例: INTJ">
                     <datalist id="mbti-list">
                         <option value="INTJ"></option><option value="INTP"></option><option value="ENTJ"></option><option value="ENTP"></option>
                         <option value="INFJ"></option><option value="INFP"></option><option value="ENFJ"></option><option value="ENFP"></option>
@@ -77,7 +78,7 @@
                 </div>
                 <div class="input-group">
                     <label>エニアグラム</label>
-                    <input type="text" id="enneagram" list="enneagram-list" placeholder="例: 5w6" autocomplete="off">
+                    <input type="text" id="enneagram" list="enneagram-list" placeholder="例: 5w6">
                     <datalist id="enneagram-list">
                         <option value="1w9"></option><option value="1w2"></option><option value="2w1"></option><option value="2w3"></option>
                         <option value="3w2"></option><option value="3w4"></option><option value="4w3"></option><option value="4w5"></option>
@@ -88,7 +89,7 @@
                 </div>
                 <div class="input-group">
                     <label>ソシオニクス</label>
-                    <input type="text" id="socionics" list="socionics-list" placeholder="例: LII" autocomplete="off">
+                    <input type="text" id="socionics" list="socionics-list" placeholder="例: LII">
                     <datalist id="socionics-list">
                         <option value="ILE"></option><option value="SEI"></option><option value="ESE"></option><option value="LII"></option>
                         <option value="EIE"></option><option value="LSI"></option><option value="SLE"></option><option value="IEI"></option>
@@ -98,11 +99,11 @@
                 </div>
                 <div class="input-group">
                     <label>トライタイプ</label>
-                    <input type="text" id="tritype" placeholder="例: △513" autocomplete="off">
+                    <input type="text" id="tritype" placeholder="例: △513">
                 </div>
                 <div class="input-group">
                     <label>生得本能</label>
-                    <input type="text" id="instinct" list="instinct-list" placeholder="例: sp/so" autocomplete="off">
+                    <input type="text" id="instinct" list="instinct-list" placeholder="例: sp/so">
                     <datalist id="instinct-list">
                         <option value="sp/so"></option><option value="sp/sx"></option>
                         <option value="so/sp"></option><option value="so/sx"></option>
@@ -111,7 +112,7 @@
                 </div>
                 <div class="input-group">
                     <label>DCNH</label>
-                    <input type="text" id="dcnh" list="dcnh-list" placeholder="例: NC" autocomplete="off">
+                    <input type="text" id="dcnh" list="dcnh-list" placeholder="例: NC">
                     <datalist id="dcnh-list">
                         <option value="D"></option><option value="C"></option><option value="N"></option><option value="H"></option>
                         <option value="DC"></option><option value="DN"></option><option value="DH"></option>
@@ -122,11 +123,11 @@
                 </div>
                 <div class="input-group">
                     <label>サイコソフィア</label>
-                    <input type="text" id="psychosophy" placeholder="例: LVFE" autocomplete="off">
+                    <input type="text" id="psychosophy" placeholder="例: LVFE">
                 </div>
                 <div class="input-group">
                     <label>アマトリカ</label>
-                    <input type="text" id="amatorica" placeholder="例: PSEA" autocomplete="off">
+                    <input type="text" id="amatorica" placeholder="例: PSEA">
                 </div>
                 
                 <div class="form-actions">
