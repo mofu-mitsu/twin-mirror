@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const originalList = document.getElementById("original-list");
     const twinList = document.getElementById("twin-list");
 
-    const GAS_URL = "https://script.google.com/macros/s/xxxx/exec"; 
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbwwd8mCtdS-a3HkoZS_4O57-Tmq-MGG3MIigw2chMVr7Mxzdvw-4GlM74kW6iYpzxGG/exec"; 
 
     let generatedShareText = "";
 
