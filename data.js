@@ -1,24 +1,22 @@
 const TypologyConverter = {
-    // MBTI: 後ろに -A や -T などがついていても、JとPを入れ替える
+    // MBTI: 後ろに -A や -T などがついていても、一番後ろにあるJとPだけを入れ替える
     mbti: (val) => {
         if(!val) return '';
-        // 文字列の中で「一番うしろにある J か P」を探して反転し、その後の文字はそのまま残す！
         return val.replace(/([JPjp])([^JPjp]*)$/, (match, p1, p2) => {
             const isLower = p1 === p1.toLowerCase();
             const flipped = p1.toUpperCase() === 'J' ? 'P' : 'J';
-            // 元の文字が小文字なら小文字で、大文字なら大文字で返す
             return (isLower ? flipped.toLowerCase() : flipped) + p2;
         });
     },
 
-    // エニアグラム: ウィングを入れ替える (例: 5w6 -> 5w4)
+    // エニアグラム: コアを維持し、もう片方のウィングに入れ替える (例: 5w6 ↔ 5w4)
     enneagram: (val) => {
         if(!val) return '';
         const match = val.match(/^(\d)\s*w\s*(\d)(.*)$/i);
         if(match) {
             const core = parseInt(match[1]);
             const wing = parseInt(match[2]);
-            const rest = match[3]; // うしろに何かついていたら残す
+            const rest = match[3]; 
             let newWing = (core - 1) === wing || (core === 1 && wing === 9) ? (core + 1) : (core - 1);
             if (newWing === 10) newWing = 1;
             if (newWing === 0) newWing = 9;
@@ -27,7 +25,7 @@ const TypologyConverter = {
         return val;
     },
 
-    // ソシオニクス: LII-Ne などのサブタイプがついていても変換する！
+    // ソシオニクス: 準同一関係 (Quasi-Identical) に変換 (LII-Neなどのサブタイプ対応)
     socionics: (val) => {
         if(!val) return '';
         const map = {
@@ -40,11 +38,9 @@ const TypologyConverter = {
             'SLE':'LSE', 'LSE':'SLE',
             'IEI':'EII', 'EII':'IEI'
         };
-        // 最初の3文字だけを抜き出して変換し、残りはそのままくっつける
         return val.replace(/^([a-zA-Z]{3})(.*)$/, (match, p1, p2) => {
             const up = p1.toUpperCase();
             if (map[up]) {
-                // 大文字小文字の見た目を元のままに寄せつつ変換
                 const isLower = p1 === p1.toLowerCase();
                 const flipped = map[up];
                 return (isLower ? flipped.toLowerCase() : flipped) + p2;
@@ -53,23 +49,29 @@ const TypologyConverter = {
         });
     },
 
-    // トライタイプ: 2文字目と3文字目をずらす (例: 513 -> 594)
+    // トライタイプ: 1文字目は固定。2,3文字目を完全対称(ペア)で入れ替え、各センター(234, 567, 891)をはみ出さない
     tritype: (val) => {
         if(!val) return '';
-        const shiftMap = {'1':'9', '2':'3', '3':'4', '4':'5', '5':'6', '6':'7', '7':'8', '8':'9', '9':'1'};
+        // 相互変換のための固定ペア (これなら絶対にA↔Bの対になる)
+        // Gut: 1↔9 (8は8のまま)
+        // Heart: 3↔4 (2は2のまま)
+        // Head: 5↔6 (7は7のまま)
+        const symMap = {
+            '1':'9', '9':'1', '8':'8',
+            '2':'2', '3':'4', '4':'3',
+            '5':'6', '6':'5', '7':'7'
+        };
         let cleanVal = val.replace(/[^0-9]/g, '');
         if(cleanVal.length >= 3) {
-            let res = cleanVal[0] + shiftMap[cleanVal[1]] + shiftMap[cleanVal[2]];
-            // 3文字の数字部分だけを置き換える（△などの記号は残る）
+            let res = cleanVal[0] + (symMap[cleanVal[1]] || cleanVal[1]) + (symMap[cleanVal[2]] || cleanVal[2]);
             return val.replace(cleanVal.substring(0,3), res);
         }
         return val;
     },
 
-    // 生得本能: メイン本能をシフトする (例: sp/so -> sx/so)
+    // 生得本能: サブ(2番目)を固定し、メイン(1番目)を「残りの1つ(盲点)」に入れ替える (例: sp/so ↔ sx/so)
     instinct: (val) => {
         if(!val) return '';
-        // "sp/so" や "sx / sp" のような形を見つける
         return val.replace(/(sp|sx|so)([\s\/]*)(sp|sx|so)(.*)/i, (match, p1, p2, p3, p4) => {
             const first = p1.toLowerCase();
             const second = p3.toLowerCase();
@@ -79,37 +81,32 @@ const TypologyConverter = {
             const third = instincts.find(i => i !== first && i !== second);
             
             if (third) {
-                // 元の文字が大文字なら大文字にする (例: SP/SO -> SX/SO)
                 const isUpper = p1 === p1.toUpperCase();
                 const newFirst = isUpper ? third.toUpperCase() : third;
-                
-                // 第3の本能 + 記号 + サブ本能 + おまけの文字 を合体して返す
                 return newFirst + p2 + p3 + p4;
             }
-            // "sp/sp" みたいに入力自体が被ってた場合はそのまま返す
             return match;
         });
     },
 
-    // DCNH: D↔C, N↔H (例: NC -> HD)
+    // DCNH: D↔C, N↔H 完全入れ替え (例: NC ↔ HD)
     dcnh: (val) => {
         if(!val) return '';
         const map = {'D':'C', 'C':'D', 'N':'H', 'H':'N', 'd':'c', 'c':'d', 'n':'h', 'h':'n'};
         return val.split('').map(c => map[c] || c).join('');
     },
 
-    // サイコソフィア: 3文字目と4文字目を入れ替え (例: LVFE -> LVEF)
+    // サイコソフィア: 3文字目と4文字目を完全入れ替え (例: LVFE ↔ LVEF)
     psychosophy: (val) => {
         if(!val) return '';
         let c = val.trim();
-        // 最初の4文字のうち、3文字目と4文字目を入れ替えて、5文字目以降はそのままくっつける
         if(c.length >= 4) {
             return c.substring(0,2) + c[3] + c[2] + c.substring(4);
         }
         return val;
     },
 
-    // アマトリカ: 3文字目と4文字目を入れ替え (例: PSEA -> PSAE)
+    // アマトリカ: 3文字目と4文字目を完全入れ替え (例: PSEA ↔ PSAE)
     amatorica: (val) => {
         if(!val) return '';
         let c = val.trim();
