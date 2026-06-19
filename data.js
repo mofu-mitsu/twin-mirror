@@ -69,10 +69,25 @@ const TypologyConverter = {
     // 生得本能: メイン本能をシフトする (例: sp/so -> sx/so)
     instinct: (val) => {
         if(!val) return '';
-        const firstShift = {'sp':'sx', 'sx':'so', 'so':'sp'};
-        return val.replace(/^(sp|sx|so)/i, (match) => {
-            const lower = match.toLowerCase();
-            return firstShift[lower] || match;
+        // "sp/so" や "sx / sp" のような形を見つける
+        return val.replace(/(sp|sx|so)([\s\/]*)(sp|sx|so)(.*)/i, (match, p1, p2, p3, p4) => {
+            const first = p1.toLowerCase();
+            const second = p3.toLowerCase();
+            const instincts = ['sp', 'sx', 'so'];
+            
+            // 1番目と2番目で使われていない「第3の本能（盲点）」を探す
+            const third = instincts.find(i => i !== first && i !== second);
+            
+            if (third) {
+                // 元の文字が大文字なら大文字にする (例: SP/SO -> SX/SO)
+                const isUpper = p1 === p1.toUpperCase();
+                const newFirst = isUpper ? third.toUpperCase() : third;
+                
+                // 第3の本能 + 記号 + サブ本能 + おまけの文字 を合体して返す
+                return newFirst + p2 + p3 + p4;
+            }
+            // "sp/sp" みたいに入力自体が被ってた場合はそのまま返す
+            return match;
         });
     },
 
