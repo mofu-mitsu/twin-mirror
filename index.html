@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEOメタタグ -->
+    <title>Twin Mirror - 準同一・双子タイプ診断 | MBTI・ソシオニクス・エニアグラム相性・自己分析ツール</title>
+    <meta name="description" content="あなたの自認タイプ（MBTI、ソシオニクス、エニアグラム、サイコソフィア等）から、鏡合わせの「双子タイプ（準同一関係）」を導き出す自己分析ツール。同じものに惹かれ、違う方法で答えを探す『もう一人のあなた』に出会えます。">
+    <meta name="keywords" content="Twin Mirror, 準同一, 双子診断, ソシオニクス, MBTI, エニアグラム, サイコソフィア, アマトリカ, DCNH, 自己分析, 相性">
+    <meta name="robots" content="index, follow">
+    
+    <!-- OGP (SNS用) -->
+    <meta property="og:title" content="Twin Mirror - 準同一・双子タイプ診断">
+    <meta property="og:description" content="同じものに惹かれ、違う方法で答えを探す。鏡合わせの「双子（準同一）」タイプを今すぐ診断しよう！">
+    <meta property="og:url" content="https://mofu-mitsu.github.io/twin-mirror/">
+    <meta property="og:image" content="https://mofu-mitsu.github.io/twin-mirror/ogp.png">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Twin Mirror">
+    
+    <!-- Twitter OGP -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Twin Mirror - 準同一・双子タイプ診断">
+    <meta name="twitter:description" content="鏡合わせの「双子（準同一）」タイプを導き出す診断ツール。MBTI、エニアグラム、ソシオニクス対応。">
+    <meta name="twitter:image" content="https://mofu-mitsu.github.io/twin-mirror/ogp.png">
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>♟️</text></svg>">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- html2canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="top-nav">
+        <a href="https://mofu-mitsu.github.io/lab.html"><i class="fa-solid fa-house"></i> Home</a>
+    </nav>
+
+    <header>
+        <h1><i class="fa-solid fa-chess-board"></i> Twin Mirror</h1>
+        <p class="subtitle">〜 準同一・双子診断 〜</p>
+        <p class="desc">あなたの自認タイプから、鏡合わせとなる「もうひとつのタイプ」を導き出します。</p>
+    </header>
+
+    <main>
+        <!-- コンセプト説明セクション -->
+        <section class="concept-section">
+            <h2><i class="fa-solid fa-book-open"></i> The Concept</h2>
+            <div class="concept-text">
+                <p><strong>「同じものに惹かれ、違う方法で答えを探す」</strong></p>
+                <p>この診断は、ソシオニクスにおける『準同一関係』という考え方から着想を得ています。文献では「話が通じない」「解決策が真逆」と表現されることも多い関係ですが、見方を変えれば、同じ現象に関心を持ちながら、自分にはない全く別のアプローチを持っているということです。</p>
+                <p>正反対のようで、どこか似ている。そんな、双子のように分かち合い補い合える「もう一人のあなた（Twin Mirror）」の姿を、各類型（MBTI、エニアグラム等）の反転ルールを用いて可視化します。</p>
+            </div>
+        </section>
+
+        <section class="input-section">
+            <h2><i class="fa-solid fa-pen-nib"></i> Enter Your Typology</h2>
+            <p class="note">※入力もリストからの選択も可能です。分からない項目は空白でOK！</p>
+            
+            <form id="typology-form">
+                <div class="input-group">
+                    <label>MBTI</label>
+                    <input type="text" id="mbti" list="mbti-list" placeholder="例: INTJ" autocomplete="off">
+                    <datalist id="mbti-list">
+                        <option value="INTJ"></option><option value="INTP"></option><option value="ENTJ"></option><option value="ENTP"></option>
+                        <option value="INFJ"></option><option value="INFP"></option><option value="ENFJ"></option><option value="ENFP"></option>
+                        <option value="ISTJ"></option><option value="ISTP"></option><option value="ESTJ"></option><option value="ESTP"></option>
+                        <option value="ISFJ"></option><option value="ISFP"></option><option value="ESFJ"></option><option value="ESFP"></option>
+                    </datalist>
+                </div>
+                <div class="input-group">
+                    <label>エニアグラム</label>
+                    <input type="text" id="enneagram" list="enneagram-list" placeholder="例: 5w6" autocomplete="off">
+                    <datalist id="enneagram-list">
+                        <option value="1w9"></option><option value="1w2"></option><option value="2w1"></option><option value="2w3"></option>
+                        <option value="3w2"></option><option value="3w4"></option><option value="4w3"></option><option value="4w5"></option>
+                        <option value="5w4"></option><option value="5w6"></option><option value="6w5"></option><option value="6w7"></option>
+                        <option value="7w6"></option><option value="7w8"></option><option value="8w7"></option><option value="8w9"></option>
+                        <option value="9w8"></option><option value="9w1"></option>
+                    </datalist>
+                </div>
+                <div class="input-group">
+                    <label>ソシオニクス</label>
+                    <input type="text" id="socionics" list="socionics-list" placeholder="例: LII" autocomplete="off">
+                    <datalist id="socionics-list">
+                        <option value="ILE"></option><option value="SEI"></option><option value="ESE"></option><option value="LII"></option>
+                        <option value="EIE"></option><option value="LSI"></option><option value="SLE"></option><option value="IEI"></option>
+                        <option value="SEE"></option><option value="ILI"></option><option value="LIE"></option><option value="ESI"></option>
+                        <option value="LSE"></option><option value="EII"></option><option value="IEE"></option><option value="SLI"></option>
+                    </datalist>
+                </div>
+                <div class="input-group">
+                    <label>トライタイプ</label>
+                    <input type="text" id="tritype" placeholder="例: △513" autocomplete="off">
+                </div>
+                <div class="input-group">
+                    <label>生得本能</label>
+                    <input type="text" id="instinct" list="instinct-list" placeholder="例: sp/so" autocomplete="off">
+                    <datalist id="instinct-list">
+                        <option value="sp/so"></option><option value="sp/sx"></option>
+                        <option value="so/sp"></option><option value="so/sx"></option>
+                        <option value="sx/sp"></option><option value="sx/so"></option>
+                    </datalist>
+                </div>
+                <div class="input-group">
+                    <label>DCNH</label>
+                    <input type="text" id="dcnh" list="dcnh-list" placeholder="例: NC" autocomplete="off">
+                    <datalist id="dcnh-list">
+                        <option value="D"></option><option value="C"></option><option value="N"></option><option value="H"></option>
+                        <option value="DC"></option><option value="DN"></option><option value="DH"></option>
+                        <option value="CD"></option><option value="CN"></option><option value="CH"></option>
+                        <option value="ND"></option><option value="NC"></option><option value="NH"></option>
+                        <option value="HD"></option><option value="HC"></option><option value="HN"></option>
+                    </datalist>
+                </div>
+                <div class="input-group">
+                    <label>サイコソフィア</label>
+                    <input type="text" id="psychosophy" placeholder="例: LVFE" autocomplete="off">
+                </div>
+                <div class="input-group">
+                    <label>アマトリカ</label>
+                    <input type="text" id="amatorica" placeholder="例: PSEA" autocomplete="off">
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" id="reset-btn" class="btn-secondary"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+                    <button type="button" id="generate-btn" class="btn-primary"><i class="fa-solid fa-wand-magic-sparkles"></i> Generate Twin</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- 画像化されるエリア -->
+        <section id="capture-area" class="result-section hidden">
+            <div class="mirror-container">
+                <!-- 自認タイプ (黒) -->
+                <div class="card original-card">
+                    <h3><i class="fa-solid fa-user"></i> Original</h3>
+                    <ul id="original-list"></ul>
+                </div>
+
+                <div class="mirror-divider">
+                    <i class="fa-solid fa-arrows-left-right"></i>
+                </div>
+
+                <!-- 双子タイプ (白) -->
+                <div class="card twin-card">
+                    <h3><i class="fa-solid fa-user-ninja"></i> Twin Mirror</h3>
+                    <ul id="twin-list"></ul>
+                </div>
+            </div>
+            <div class="watermark">Twin Mirror Typology</div>
+        </section>
+
+        <div class="action-buttons hidden" id="action-buttons">
+            <button id="download-btn" class="btn-outline"><i class="fa-solid fa-download"></i> 画像保存</button>
+            <button id="share-btn" class="btn-outline"><i class="fa-solid fa-share-nodes"></i> シェア</button>
+        </div>
+    </main>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,690 @@
+:root {
+    --bg-color: #0f0f0f;
+    --card-bg: #1a1a1a;
+    --text-main: #e0e0e0;
+    --text-sub: #aaaaaa;
+    --accent: #ffffff;
+    --border: #333333;
+    
+    /* カードのテーマカラー */
+    --black-bg: #141414;
+    --black-text: #f0f0f0;
+    --white-bg: #f5f5f5;
+    --white-text: #111111;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: 'Noto Sans JP', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ナビゲーション */
+.top-nav {
+    width: 100%;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: flex-start;
+    background: rgba(0, 0, 0, 0.5);
+    border-bottom: 1px solid var(--border);
+}
+
+.top-nav a {
+    color: var(--accent);
+    text-decoration: none;
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+.top-nav a:hover {
+    color: #888;
+}
+
+header {
+    text-align: center;
+    margin: 2.5rem 0 2rem;
+}
+
+header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 2.5rem;
+    margin-bottom: 0.2rem;
+}
+
+header .subtitle {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    color: var(--accent);
+}
+
+header .desc {
+    color: var(--text-sub);
+    font-size: 0.9rem;
+}
+
+main {
+    width: 100%;
+    max-width: 800px;
+    padding: 0 1rem 3rem;
+}
+
+/* コンセプトセクション */
+.concept-section {
+    background: rgba(255, 255, 255, 0.03);
+    border-left: 4px solid var(--accent);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border-radius: 0 8px 8px 0;
+}
+
+.concept-section h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.concept-text p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #cccccc;
+    margin-bottom: 0.8rem;
+}
+.concept-text p:last-child {
+    margin-bottom: 0;
+}
+
+.input-section {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+.input-section h2 {
+    font-family: 'Cinzel', serif;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.note {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-sub);
+    margin-bottom: 1.5rem;
+}
+
+#typology-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.2rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    font-size: 0.85rem;
+    color: var(--text-sub);
+    margin-bottom: 0.3rem;
+}
+
+.input-group input {
+    background: var(--bg-color);
+    border: 1px solid var(--border);
+    color: var(--accent);
+    padding: 0.8rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: 'Cinzel', 'Noto Sans JP', sans-serif;
+    transition: all 0.3s;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 8px rgba(255,255,255,0.2);
+}
+
+.form-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+button {
+    flex: 1;
+    padding: 1rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    font-family: 'Cinzel', 'Noto Sans JP', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: var(--bg-color);
+    border: none;
+}
+.btn-primary:hover {
+    background: #cccccc;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text-sub);
+    border: 1px solid var(--border);
+}
+.btn-secondary:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+/* 鏡面（結果）エリア */
+.result-section {
+    background: var(--bg-color);
+    padding: 2.5rem 1.5rem;
+    border-radius: 12px;
+    position: relative;
+    border: 1px solid var(--border);
+}
+
+.mirror-container {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+@media (max-width: 600px) {
+    .mirror-container {
+        flex-direction: column;
+    }
+}
+
+.card {
+    flex: 1;
+    border-radius: 12px;
+    padding: 1.5rem;
+    width: 100%;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+.card h3 {
+    font-family: 'Cinzel', serif;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.8rem;
+    font-size: 1.2rem;
+}
+
+.card ul {
+    list-style: none;
+}
+
+.card li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.6rem 0;
+    font-size: 0.95rem;
+}
+
+.card li span.val {
+    font-family: 'Cinzel', sans-serif;
+    font-weight: 700;
+}
+
+/* オリジナル（黒） */
+.original-card {
+    background: var(--black-bg);
+    color: var(--black-text);
+    border: 1px solid #333;
+}
+.original-card h3 {
+    border-bottom: 1px solid #444;
+}
+.original-card li {
+    border-bottom: 1px dashed #333;
+}
+.original-card li span.val {
+    color: #fff;
+}
+
+/* 双子（白） */
+.twin-card {
+    background: var(--white-bg);
+    color: var(--white-text);
+    border: 1px solid #ddd;
+}
+.twin-card h3 {
+    border-bottom: 1px solid #ccc;
+    color: #111;
+}
+.twin-card li {
+    border-bottom: 1px dashed #ccc;
+}
+.twin-card li span.val {
+    color: #000;
+}
+
+.mirror-divider {
+    font-size: 2rem;
+    color: var(--text-sub);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.watermark {
+    text-align: center;
+    margin-top: 2rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    color: #555;
+    letter-spacing: 2px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.action-buttons {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--text-sub);
+    color: var(--accent);
+    padding: 0.8rem 1.5rem;
+    flex: none;
+    width: auto;
+}
+
+.btn-outline:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: var(--accent);
+}
+
+:root {
+    --bg-color: #0f0f0f;
+    --card-bg: #1a1a1a;
+    --text-main: #e0e0e0;
+    --text-sub: #aaaaaa;
+    --accent: #ffffff;
+    --border: #333333;
+    
+    /* カードのテーマカラー */
+    --black-bg: #141414;
+    --black-text: #f0f0f0;
+    --white-bg: #f5f5f5;
+    --white-text: #111111;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: 'Noto Sans JP', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    -webkit-text-size-adjust: 100%; /* iOSでのフォント自動調整防止 */
+}
+
+/* ナビゲーション */
+.top-nav {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: flex-start;
+    background: rgba(0, 0, 0, 0.5);
+    border-bottom: 1px solid var(--border);
+}
+
+.top-nav a {
+    color: var(--accent);
+    text-decoration: none;
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.top-nav a:hover {
+    color: #888;
+}
+
+header {
+    text-align: center;
+    margin: 2rem 0;
+    padding: 0 1rem;
+}
+
+header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 2.2rem;
+    margin-bottom: 0.2rem;
+    word-break: break-word;
+}
+
+header .subtitle {
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 0.8rem;
+    color: var(--accent);
+}
+
+header .desc {
+    color: var(--text-sub);
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+main {
+    width: 100%;
+    max-width: 800px;
+    padding: 0 1rem 3rem;
+}
+
+/* コンセプトセクション */
+.concept-section {
+    background: rgba(255, 255, 255, 0.02);
+    border-left: 3px solid var(--accent);
+    padding: 1.2rem;
+    margin-bottom: 1.5rem;
+    border-radius: 0 8px 8px 0;
+}
+
+.concept-section h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+}
+
+.concept-text p {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: #cccccc;
+    margin-bottom: 0.8rem;
+}
+.concept-text p:last-child {
+    margin-bottom: 0;
+}
+
+/* 入力セクション */
+.input-section {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+.input-section h2 {
+    font-family: 'Cinzel', serif;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+}
+
+.note {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--text-sub);
+    margin-bottom: 1.2rem;
+}
+
+#typology-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+@media (max-width: 480px) {
+    #typology-form {
+        grid-template-columns: 1fr; /* スマホなら1列に並べる */
+    }
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    font-size: 0.8rem;
+    color: var(--text-sub);
+    margin-bottom: 0.3rem;
+}
+
+.input-group input {
+    background: var(--bg-color);
+    border: 1px solid var(--border);
+    color: var(--accent);
+    padding: 0.75rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: 'Cinzel', 'Noto Sans JP', sans-serif;
+    transition: all 0.3s;
+    -webkit-appearance: none; /* iOSデフォルトスタイル排除 */
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 8px rgba(255,255,255,0.15);
+}
+
+.form-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 1rem;
+}
+
+button {
+    flex: 1;
+    padding: 0.9rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    font-family: 'Cinzel', 'Noto Sans JP', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: var(--bg-color);
+    border: none;
+}
+.btn-primary:hover {
+    background: #cccccc;
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text-sub);
+    border: 1px solid var(--border);
+}
+.btn-secondary:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+/* 鏡面（結果）エリア */
+.result-section {
+    background: var(--bg-color);
+    padding: 2rem 1rem;
+    border-radius: 12px;
+    position: relative;
+    border: 1px solid var(--border);
+    margin-bottom: 1rem;
+}
+
+.mirror-container {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+@media (max-width: 600px) {
+    .mirror-container {
+        flex-direction: column; /* スマホでは縦並びに */
+        align-items: center;
+    }
+}
+
+.card {
+    flex: 1;
+    border-radius: 12px;
+    padding: 1.2rem;
+    width: 100%;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+}
+
+.card h3 {
+    font-family: 'Cinzel', serif;
+    text-align: center;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.6rem;
+    font-size: 1.1rem;
+}
+
+.card ul {
+    list-style: none;
+}
+
+.card li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    font-size: 0.85rem;
+}
+
+.card li span.val {
+    font-family: 'Cinzel', sans-serif;
+    font-weight: 700;
+}
+
+/* オリジナル（黒） */
+.original-card {
+    background: var(--black-bg);
+    color: var(--black-text);
+    border: 1px solid #2a2a2a;
+}
+.original-card h3 {
+    border-bottom: 1px solid #333;
+}
+.original-card li {
+    border-bottom: 1px dashed #2a2a2a;
+}
+.original-card li span.val {
+    color: #fff;
+}
+
+/* 双子（白） */
+.twin-card {
+    background: var(--white-bg);
+    color: var(--white-text);
+    border: 1px solid #e0e0e0;
+}
+.twin-card h3 {
+    border-bottom: 1px solid #d0d0d0;
+    color: #111;
+}
+.twin-card li {
+    border-bottom: 1px dashed #d0d0d0;
+}
+.twin-card li span.val {
+    color: #000;
+}
+
+.mirror-divider {
+    font-size: 1.5rem;
+    color: var(--text-sub);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 0;
+}
+
+@media (max-width: 600px) {
+    .mirror-divider {
+        transform: rotate(90deg); /* スマホで縦並びの時はアイコンを縦向きに */
+        padding: 0.2rem 0;
+    }
+}
+
+.watermark {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    color: #444;
+    letter-spacing: 2px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.action-buttons {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    padding: 0.8rem 1.5rem;
+    flex: none;
+    width: auto;
+    font-size: 0.9rem;
+}
+
+.btn-outline:hover {
+    background: rgba(255,255,255,0.05);
+    border-color: var(--accent);
+    color: var(--accent);
+}
